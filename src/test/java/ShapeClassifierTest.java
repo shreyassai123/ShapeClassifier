@@ -46,4 +46,36 @@ public class ShapeClassifierTest {
         String result = classifier.evaluateGuess(input);
         assertEquals("Yes: Wrong Even/Odd", result);
     }
+
+    @Test
+    void testEvaluateGuess_RectangleShape() {
+        ShapeClassifier classifier = new ShapeClassifier();
+        String input = "Rectangle,Large,No,50,50,30,30";
+        String result = classifier.evaluateGuess(input);
+        assertEquals("Wrong Size,Wrong Even/Odd", result);
+    }
+
+    @Test
+    void testEvaluateGuess_EllipseShape() {
+        ShapeClassifier classifier = new ShapeClassifier();
+        String input = "Ellipse,Large,Yes,50,30";
+        String result = classifier.evaluateGuess(input);
+        assertEquals("No: Suggestion=Ellipse", result);
+    }
+
+    @Test
+    void testEvaluateGuess_InvalidParams() {
+        ShapeClassifier classifier = new ShapeClassifier();
+        String input = "Circle,Large,Yes,-1,-1"; // Invalid parameters
+        String result = classifier.evaluateGuess(input);
+        assertEquals("Yes: Wrong Even/Odd", result);
+    }
+
+    @Test
+    void testEvaluateGuess_InvalidFormat() {
+        ShapeClassifier classifier = new ShapeClassifier();
+        String input = "InvalidInput"; // Invalid format
+        String result = classifier.evaluateGuess(input);
+        assertEquals("No", result);
+    }
 }
